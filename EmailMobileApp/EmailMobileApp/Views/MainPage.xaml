@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EmailMobileApp.Views.MainPage"
+             xmlns:viewmodels="clr-namespace:EmailMobileApp.ViewModels"
+             xmlns:views="clr-namespace:EmailMobileApp.Views"
+             BackgroundColor="White"
+             x:Name="emailMainPage">
+    <ContentPage.BindingContext>
+        <viewmodels:MainViewModel/>
+    </ContentPage.BindingContext>
+    <AbsoluteLayout>
+        <CollectionView x:Name="emailCollectionView"
+            ItemsSource="{Binding Mails}"
+            SelectedItem="{Binding SelectMail}"
+            ItemsLayout="VerticalList"
+            SelectionMode="Single">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <SwipeView>
+                        <SwipeView.RightItems>
+                            <SwipeItem Text="Delete"
+                                   BackgroundColor="Red"
+                                   Command="{Binding Source={x:Reference emailMainPage}, Path=BindingContext.DeleteMailCommand}"
+                                   CommandParameter="{Binding}"/>
+                        </SwipeView.RightItems>
+                        <StackLayout>
+                            <Label HorizontalOptions="StartAndExpand"
+                                   Text="{Binding Name}"
+                                   FontSize="Large"/>
+                            <Label HorizontalOptions="EndAndExpand"
+                                   Text="{Binding Title}"
+                                   FontSize="Small"/>
+                        </StackLayout>
+                    </SwipeView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <ImageButton Source="editLogo.png" 
+                            BackgroundColor="Transparent"
+                            AbsoluteLayout.LayoutFlags="PositionProportional"
+                            CornerRadius="100"
+                            AbsoluteLayout.LayoutBounds=".95,.95,55,55"
+                            Command="{Binding AddMailCommand}"/>
+    </AbsoluteLayout>
+    <!--AbsoluteLayout.LayoutBounds=".95,.95,80,80"-->
+    <!--<CollectionView x:Name="emailCollectionView"
+                    ItemsSource="{Binding Mails}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    --><!--<SwipeView>
+                        <SwipeView.RightItems>
+                            <SwipeItem Text="Delete"
+                                   BackgroundColor="Red"/>
+                        </SwipeView.RightItems>
+                    </SwipeView>--><!--
+                    <TextCell Text="{Binding Title}" Detail="{Binding Name}"/>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>-->
+</ContentPage>

@@ -133,4 +133,7 @@
       <Name>EmailMobileApp</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\editLogo.png" />
+  </ItemGroup>
 </Project>
