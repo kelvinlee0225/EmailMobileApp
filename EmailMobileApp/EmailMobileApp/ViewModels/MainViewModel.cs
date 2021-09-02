@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
+using Xamarin.Essentials;
 
 namespace EmailMobileApp.ViewModels
 {
@@ -32,17 +33,19 @@ namespace EmailMobileApp.ViewModels
         public ICommand SelectedMailCommand { get;  }
         public ICommand AddMailCommand { get; }
         public ICommand DeleteMailCommand { get; }
+        public ICommand AttachPhoto { get; }
 
-        public ObservableCollection<Mail> Mails { get; } = new ObservableCollection<Mail>()
+        public ObservableCollection<Mail> Mails { get; set; } = new ObservableCollection<Mail>()
         {
-            new Mail("Kelvin", "example@example.com", "Try1", "Content1"),
-            new Mail("Kelvin", "example@example.com", "Try2", "Content2")
+            new Mail("from@example1","example@example.com", "Try1", "Content1"),
+            new Mail("from@example2","example@example.com", "Try2", "Content2")
         };
         public MainViewModel()
         {
             SelectedMailCommand = new Command<Mail>(OnMailSelected);
             AddMailCommand = new Command<Mail>(AddMail);
             DeleteMailCommand = new Command<Mail>(DeleteMail);
+            //AttachPhoto = new Command<Mail>(PhotoAttachment);
         }
 
         private void DeleteMail(Mail mail)
@@ -52,20 +55,20 @@ namespace EmailMobileApp.ViewModels
 
         private async void AddMail(Mail mail)
         {
-            var nombre = await App.Current.MainPage.DisplayPromptAsync("Especifique", "Su nombre");
-            var correo = await App.Current.MainPage.DisplayPromptAsync("Especifique", "Correo de destino");
-            var titulo = await App.Current.MainPage.DisplayPromptAsync("Especifique", "Titulo del correo");
-            var contenido = await App.Current.MainPage.DisplayPromptAsync("Especifique", "Contenido del correo");
+            var from = await App.Current.MainPage.DisplayPromptAsync("Especifique", "Su nombre");
+            var to = await App.Current.MainPage.DisplayPromptAsync("Especifique", "Correo de destino");
+            var subject = await App.Current.MainPage.DisplayPromptAsync("Especifique", "Titulo del correo");
+            var content = await App.Current.MainPage.DisplayPromptAsync("Especifique", "Contenido del correo");
 
-            if(nombre != null && correo != null && titulo != null && contenido != null)
+            if(from != null && to != null && subject != null && content != null)
             {
-                Mails.Add(new Mail(nombre, correo, titulo, contenido));
+                Mails.Add(new Mail(from, to, subject, content));
             }
         }
 
         private async void OnMailSelected(Mail mail)
         {
-            await App.Current.MainPage.DisplayAlert(mail.Name,mail.Title, "OK");
+            await App.Current.MainPage.DisplayAlert(mail.From ,mail.Subject, "OK");
         }
     }
 }

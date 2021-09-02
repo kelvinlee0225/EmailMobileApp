@@ -7,19 +7,21 @@ namespace EmailMobileApp.Models
 {
     public class Mail : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-        public Mail(string name, string email, string title, string content)
+        public Mail(string from, string to, string subject, string content)
         {
-            Name = name;
-            Email = email;
-            Title = title;
+            From = from;
+            To = to;
+            Subject = subject;
             Content = content;
         }
 
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public string Title { get; set; }
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public string From { get; set; }
+        public string To { get; set; }
+        public string Subject { get; set; }
         public string Content { get; set; }
+
 
     }
 }
